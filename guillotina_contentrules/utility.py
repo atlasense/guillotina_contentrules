@@ -45,7 +45,7 @@ class ContentRulesUtility:
                         continue
 
                     rules = [r for r in config['rules'].values()]
-                    executor = Executor(ob, event, rules)
+                    executor = Executor(ob, request, event, rules)
                     matching_rules = await executor.get_matching_rules()
                     await executor.execute_actions(matching_rules)
                     await tm.abort(txn=txn)
@@ -60,7 +60,10 @@ class ContentRulesUtility:
                     exc_info=True)
                 await asyncio.sleep(1)
             finally:
-                self._queue.task_done()
+                try:
+                    self._queue.task_done()
+                except ValueError:
+                    pass
 
     async def finalize(self, app):
         pass

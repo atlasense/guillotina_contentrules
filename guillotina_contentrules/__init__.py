@@ -2,12 +2,7 @@ from guillotina import configure
 
 
 app_settings = {
-    "contentrules_executor": "guillotina_contentrules.executor.Executor",
-    "contentrules_conditions": {
-        "event": "guillotina_contentrules.conditions.event.condition"
-    },
-    "contentrules_actions": {
-    }
+    "contentrules_executor": "guillotina_contentrules.executor.Executor"
 }
 
 
@@ -19,3 +14,5 @@ def includeme(root):
     configure.scan('guillotina_contentrules.install')
     configure.scan('guillotina_contentrules.utility')
     configure.scan('guillotina_contentrules.subscribers')
+    configure.scan('guillotina_contentrules.conditions')
+    configure.scan('guillotina_contentrules.actions')
